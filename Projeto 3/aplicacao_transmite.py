@@ -26,7 +26,7 @@ import time
 
 #serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
 #serialName = "/dev/tty.usbmodem1411" # Mac    (variacao de)
-serialName = "COM4"                  # Windows(variacao de)
+serialName = "COM11"                  # Windows(variacao de)
 
 
 
@@ -34,13 +34,12 @@ print("porta COM aberta com sucesso")
 
 
 
-def main(filename):
+def main():
     # Inicializa enlace ... variavel com possui todos os metodos e propriedades do enlace, que funciona em threading
     com = enlace(serialName)
 
     # Ativa comunicacao
     com.enable()
-
 
     #verificar que a comunicação foi aberta
     print("comunicação aberta")
@@ -52,19 +51,19 @@ def main(filename):
     print ("gerando dados para transmissao :")
   
    
-    with open(filename, "rb") as imageFile:
+    '''with open("jukes.jpg", "rb") as imageFile:
         f = imageFile.read()
 
 
-    txBuffer = bytes(f)
+    txBuffer = bytes(f)'''
+    txBuffer = b'BRU123456789NAOgfbfgbgbfg 123456789 yjyjyjyj'
     txLen    = len(txBuffer)
     print("Tamanho do arquivo enviado: " + str(txLen/1024) + " kb." )
-    print("Tempo estimado: " + str((txLen*10*2)/com.fisica.baudrate)+ " segundos.")
+    print("Tempo estimado: " + str(((10*txLen*2)+10+9)/com.fisica.baudrate)+ " segundos.")
 
     # Transmite dado
     print("tentado transmitir ....")
     com.sendData(txBuffer)
-    start_time = time.time()
 
         
     # Atualiza dados da transmissão
@@ -78,7 +77,7 @@ def main(filename):
     print("-------------------------")
     com.disable()
 
-    elapsed_time = time.time() - start_time
-    print("Tempo de envio: " + str(elapsed_time) + " segundos.")
+    
     #so roda o main quando for executado do terminal ... se for chamado dentro de outro modulo nao roda
-
+if __name__ == "__main__":
+    main()
